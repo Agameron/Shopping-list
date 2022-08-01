@@ -1,9 +1,10 @@
-package com.example.shoppinglist.data
+package com.example.shoppinglist.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.shoppinglist.data.db.entities.ShoppingItem
 
 @Database(
     entities = [ShoppingItem::class],
@@ -19,10 +20,10 @@ abstract class ShoppingDatabase : RoomDatabase() {
         private var LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: creatDatabase(context).also { instance = it }
+            instance ?: createDatabase(context).also { instance = it }
         }
 
-        private fun creatDatabase(context: Context) =
+        private fun createDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
                 ShoppingDatabase::class.java, "shoppingDB.db"
